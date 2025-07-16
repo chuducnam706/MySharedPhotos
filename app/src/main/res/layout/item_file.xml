@@ -10,20 +10,34 @@
         android:id="@+id/imgStorage"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:src="@drawable/ic_launcher_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_launcher_background" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtTitlePath"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="xin chào"
-        android:textSize="16sp"
         android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/imgStorage"
         app:layout_constraintStart_toEndOf="@id/imgStorage"
         app:layout_constraintTop_toTopOf="@id/imgStorage"
-        app:layout_constraintBottom_toBottomOf="@id/imgStorage"
-        android:layout_marginStart="16dp" />
+        android:inputType="textMultiLine"
+        android:singleLine="false"
+        android:maxLines="2"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:id="@+id/btnOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/baseline_more_vert_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

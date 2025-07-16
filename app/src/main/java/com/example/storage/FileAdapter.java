@@ -3,6 +3,7 @@ package com.example.storage;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,12 +56,19 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
             super(binding.getRoot());
             this.binding = binding;
 
-
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            binding.imgStorage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FolderModel model = data.get(getAbsoluteAdapterPosition());
                     clickItem.onClick(model);
+                }
+            });
+
+            binding.btnOption.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FolderModel model = data.get(getAbsoluteAdapterPosition());
+                    clickItem.onClickOption(model);
                 }
             });
         }

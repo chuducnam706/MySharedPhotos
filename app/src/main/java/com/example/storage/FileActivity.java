@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -112,6 +113,11 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
         Intent intent = new Intent(this, ImageActivity.class);
         intent.putExtra("image", sentData);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClickOption(FolderModel model) {
+        Toast.makeText(FileActivity.this, "Bạn đã nhấn vào nút tuỳ chọn: " , Toast.LENGTH_SHORT).show();
     }
 
 }

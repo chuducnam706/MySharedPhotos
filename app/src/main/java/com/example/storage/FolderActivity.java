@@ -63,4 +63,9 @@
         @Override
         public void onClick(FolderModel model) {}
 
+        @Override
+        public void onClickOption(FolderModel model) {
+
+        }
+
     }
