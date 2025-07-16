@@ -1,6 +1,11 @@
 package com.example.storage;
 
+import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
+
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,6 +15,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.storage.databinding.ActivityFileBinding;
@@ -24,6 +30,7 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
     private FileAdapter adapter;
     private FolderViewModel viewModel;
     private FolderData data;
+    private static final int Camera_Permision_Code = 100;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,15 +51,16 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
         binding.lstImage.setAdapter(adapter);
         initData(data);
 
+        initializeEvent();
 
-        binding.btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addImg();
-
-            }
-        });
     }
+
+    private void initializeEvent(){
+        binding.btnBack.setOnClickListener(e -> finish());
+
+        binding.btnOpenCamera.setOnClickListener(e -> openCamera());
+    }
+
 
     private void initData(FolderData data) {
         List<FolderModel> models = data.getImages();
@@ -65,21 +73,33 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
         adapter.setData(models);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    private void addImg() {
-
+    private void addImg(Bitmap bitmap) {
         String getPath = data.getName();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.my_image);
         viewModel.addImage(this, bitmap, getPath);
-        Log.d("success", getPath);
-
+        initData(data);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != Activity.RESULT_OK || data == null) return;
+
+        if (requestCode == Camera_Permision_Code) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            addImg(photo);
+        }
+    }
+
+    private void openCamera() {
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(FileActivity.this, new String[]{Manifest.permission.CAMERA}, Camera_Permision_Code);
+            return;
+        }
+
+        Intent intent = new Intent(ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 100);
+    }
 
     @Override
     public void onClick(FolderData data) {
