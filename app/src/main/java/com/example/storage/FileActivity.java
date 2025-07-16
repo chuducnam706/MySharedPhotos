@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.storage.databinding.ActivityFileBinding;
 import com.google.gson.Gson;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileActivity extends AppCompatActivity implements onClickItem{
+public class FileActivity extends AppCompatActivity implements onClickItem {
     private ActivityFileBinding binding;
     private FileAdapter adapter;
     private FolderViewModel viewModel;
@@ -30,10 +31,10 @@ public class FileActivity extends AppCompatActivity implements onClickItem{
         binding = ActivityFileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewModel = new FolderViewModel();
+        viewModel = new ViewModelProvider(this).get(FolderViewModel.class);
 
         Intent intent = getIntent();
-        String dataText =  intent.getStringExtra("data");
+        String dataText = intent.getStringExtra("data");
 
         Gson gs = new Gson();
         data = gs.fromJson(dataText, FolderData.class);
@@ -47,14 +48,15 @@ public class FileActivity extends AppCompatActivity implements onClickItem{
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                addImg();
+
             }
         });
     }
 
-    private void initData(FolderData data){
+    private void initData(FolderData data) {
         List<FolderModel> models = data.getImages();
-        for(FolderModel model : models){
+        for (FolderModel model : models) {
             String fullPath = model.getData();
             String[] paths = fullPath.split("/");
             String pathParent = paths[paths.length - 1];
@@ -64,7 +66,24 @@ public class FileActivity extends AppCompatActivity implements onClickItem{
     }
 
     @Override
-    public void onClick(FolderData data) {}
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private void addImg() {
+
+        String getPath = data.getName();
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.my_image);
+        viewModel.addImage(this, bitmap, getPath);
+        Log.d("success", getPath);
+
+    }
+
+
+    @Override
+    public void onClick(FolderData data) {
+    }
 
     @Override
     public void onClick(FolderModel model) {
