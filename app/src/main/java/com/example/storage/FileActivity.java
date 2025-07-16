@@ -87,7 +87,7 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
 
         if (requestCode == Camera_Permision_Code) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-
+            addImg(photo);
         }
     }
 
