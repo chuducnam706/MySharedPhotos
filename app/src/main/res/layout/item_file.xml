@@ -19,17 +19,27 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:inputType="textMultiLine"
+        android:maxLines="2"
+        android:singleLine="false"
         android:text="xin chào"
         android:textColor="@color/black"
         android:textSize="14sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/imgStorage"
         app:layout_constraintStart_toEndOf="@id/imgStorage"
-        app:layout_constraintTop_toTopOf="@id/imgStorage"
-        android:inputType="textMultiLine"
-        android:singleLine="false"
-        android:maxLines="2"
-        android:ellipsize="end"
-        />
+        app:layout_constraintTop_toTopOf="@id/imgStorage" />
+
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/imgStorage"
+        app:layout_constraintStart_toEndOf="@id/imgStorage"
+        app:layout_constraintTop_toTopOf="@id/imgStorage"/>
 
     <TextView
         android:id="@+id/btnOption"

@@ -58,7 +58,7 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
 
     }
 
-    private void initializeEvent(){
+    private void initializeEvent() {
         binding.btnBack.setOnClickListener(e -> finish());
 
         binding.btnOpenCamera.setOnClickListener(e -> openCamera());
@@ -82,7 +82,6 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
         initData(data);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -105,25 +104,31 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
     }
 
 
-    private void upDateFileName(){
-
+    private void upDateFileName(FolderModel model) {
+        String oldFileNam = " ";
+        String path = model.getData();
+        String[] paths = path.split("/");
+        String oldFileName = paths[paths.length - 1];
+        viewModel.upDateFileNameImage(this, oldFileName, "kachu.jpg");
     }
 
-    private void deleteImage(){
-
+    private void deleteImage(FolderModel model) {
+        String path = model.getData();
+        String[] paths = path.split("/");
+        String fileName = paths[paths.length - 1];
+        viewModel.deleteImage(this, fileName);
     }
 
-
-    private void showPopupImage(View achor){
+    private void showPopupImage(View achor, FolderModel model) {
         PopupMenu popupMenu = new PopupMenu(FileActivity.this, achor);
         popupMenu.getMenuInflater().inflate(R.menu.popup_option, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(MenuItem ->{
+        popupMenu.setOnMenuItemClickListener(MenuItem -> {
             int id = MenuItem.getItemId();
             if (id == R.id.upDateFileName) {
-               upDateFileName();
+                upDateFileName(model);
                 return true;
             } else {
-                deleteImage();
+                deleteImage(model);
                 return false;
             }
         });
@@ -145,7 +150,7 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
 
     @Override
     public void onClickOption(FolderModel model, View view) {
-        showPopupImage(view);
+        showPopupImage(view, model);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.storage;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -128,11 +129,52 @@ public class FolderViewModel extends ViewModel {
         }
     }
 
-    public void deleteImage(){
+    public void deleteImage(Context context, String fileName){
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        String selection = MediaStore.Images.Media.DISPLAY_NAME + " =? ";
+        String[] selectionArgs = new String[]{fileName};
+
+
+        Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.Media._ID},selection ,selectionArgs,null);
+        if ((cursor != null && cursor.moveToFirst())){
+            int indexColumId = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+            long id = cursor.getLong(indexColumId);
+            Uri deleteImage = ContentUris.withAppendedId(uri, id);
+
+            int deleteRows = context.getContentResolver().delete(deleteImage, null, null);
+
+            if(deleteRows > 0){
+                Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+            }
+        }
 
     }
 
-    public void upDateFileNameImage(){
+    public void upDateFileNameImage(Context context, String oldFileName, String newFileName){
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        String  selection = MediaStore.Images.Media.DISPLAY_NAME + " =? ";
+        String[] selectionArgs = new String[]{oldFileName};
+
+        Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.Media._ID},selection, selectionArgs, null);
+
+        if (cursor != null && cursor.moveToFirst()){
+            int idColumId = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+            long getImageId = cursor.getLong(idColumId);
+
+            Uri imageUri = ContentUris.withAppendedId(uri, getImageId);
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DISPLAY_NAME, newFileName);
+
+
+            int rows = context.getContentResolver().update(imageUri, values, null, null);
+            if(rows > 0){
+                Toast.makeText(context, "Change file name success", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "No Update File Name", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
     }
 
