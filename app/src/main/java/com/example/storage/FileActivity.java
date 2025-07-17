@@ -105,7 +105,6 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
 
 
     private void upDateFileName(FolderModel model) {
-        String oldFileNam = " ";
         String path = model.getData();
         String[] paths = path.split("/");
         String oldFileName = paths[paths.length - 1];
