@@ -5,6 +5,7 @@
     import android.graphics.BitmapFactory;
     import android.os.Bundle;
     import android.util.Log;
+    import android.view.View;
     import android.widget.Toast;
 
     import androidx.annotation.NonNull;
@@ -64,7 +65,7 @@
         public void onClick(FolderModel model) {}
 
         @Override
-        public void onClickOption(FolderModel model) {
+        public void onClickOption(FolderModel model, View view) {
 
         }
 

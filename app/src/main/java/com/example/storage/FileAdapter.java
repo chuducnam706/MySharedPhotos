@@ -68,7 +68,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     FolderModel model = data.get(getAbsoluteAdapterPosition());
-                    clickItem.onClickOption(model);
+                    clickItem.onClickOption(model, v);
                 }
             });
         }

@@ -11,7 +11,9 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -80,6 +82,7 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
         initData(data);
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,9 +100,34 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
             ActivityCompat.requestPermissions(FileActivity.this, new String[]{Manifest.permission.CAMERA}, Camera_Permision_Code);
             return;
         }
-
         Intent intent = new Intent(ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 100);
+    }
+
+
+    private void upDateFileName(){
+
+    }
+
+    private void deleteImage(){
+
+    }
+
+
+    private void showPopupImage(View achor){
+        PopupMenu popupMenu = new PopupMenu(FileActivity.this, achor);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_option, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(MenuItem ->{
+            int id = MenuItem.getItemId();
+            if (id == R.id.upDateFileName) {
+               upDateFileName();
+                return true;
+            } else {
+                deleteImage();
+                return false;
+            }
+        });
+        popupMenu.show();
     }
 
     @Override
@@ -116,8 +144,8 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
     }
 
     @Override
-    public void onClickOption(FolderModel model) {
-        Toast.makeText(FileActivity.this, "Bạn đã nhấn vào nút tuỳ chọn: " , Toast.LENGTH_SHORT).show();
+    public void onClickOption(FolderModel model, View view) {
+        showPopupImage(view);
     }
 
 }

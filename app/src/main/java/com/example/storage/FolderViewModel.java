@@ -89,32 +89,30 @@ public class FolderViewModel extends ViewModel {
         return items;
     }
 
-    void addImage(Context context, Bitmap bitmap, String path){
+    public void addImage(Context context, Bitmap bitmap, String path) {
 
         String en = Environment.getExternalStorageDirectory().getAbsolutePath();
         String pathImage = path.substring(en.length());
 
-        if(pathImage.startsWith("/")){
-        pathImage = pathImage.substring(1);
-        Log.d("success2", pathImage);
+        if (pathImage.startsWith("/")) {
+            pathImage = pathImage.substring(1);
         }
-
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, "Hello.jpg");
         contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, pathImage);
-       // contentValues.put(MediaStore.Images.Media.IS_PENDING, 1);
+        // contentValues.put(MediaStore.Images.Media.IS_PENDING, 1);
 
         ContentResolver contentResolver = context.getContentResolver();
         Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-        if (uri != null){
+        if (uri != null) {
             try {
                 OutputStream outputStream = contentResolver.openOutputStream(uri);
-                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
-                if (isSuccess){
+                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                if (isSuccess) {
                     Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
                 }
                 outputStream.close();
@@ -125,9 +123,17 @@ public class FolderViewModel extends ViewModel {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }else{
+        } else {
             Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void deleteImage(){
+
+    }
+
+    public void upDateFileNameImage(){
+
     }
 
 }

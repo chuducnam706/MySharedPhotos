@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/deleteImage" android:title="Xóa ảnh"/>
+    <item android:id="@+id/upDateFileName" android:title="Sửa đường dẫn file"/>
+
+
+</menu>
