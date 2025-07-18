@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -35,7 +36,9 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
     private FileAdapter adapter;
     private FolderViewModel viewModel;
     private FolderData data;
-    private static final int Camera_Permision_Code = 100;
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int CAMERA_REQUEST_CODE = 100;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,21 +89,31 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode != Activity.RESULT_OK || data == null) return;
+        if (resultCode != Activity.RESULT_OK || data == null){
+            return;
+        }
 
-        if (requestCode == Camera_Permision_Code) {
+        if (requestCode == CAMERA_REQUEST_CODE) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             addImg(photo);
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults, int deviceId) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId);
+        if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+            openCamera();
+        }
+    }
+
     private void openCamera() {
         if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(FileActivity.this, new String[]{Manifest.permission.CAMERA}, Camera_Permision_Code);
+            ActivityCompat.requestPermissions(FileActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
             return;
         }
         Intent intent = new Intent(ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 100);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
 
     private void upDateFileName(FolderModel model) {
