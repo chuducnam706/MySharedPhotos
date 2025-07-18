@@ -42,10 +42,7 @@
             viewModel = new ViewModelProvider(this).get(FolderViewModel.class);
             initData();
 
-            //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.my_image);
-            //viewModel.addImage(this, bitmap);
         }
-
 
         private void initData() {
             List<FolderData> data = viewModel.getDataFromExternal(this);
@@ -59,10 +56,13 @@
             Intent intent = new Intent(this, FileActivity.class);
             intent.putExtra("data", temp);
             startActivity(intent);
+
         }
 
         @Override
-        public void onClick(FolderModel model) {}
+        public void onClick(FolderModel model) {
+
+        }
 
         @Override
         public void onClickOption(FolderModel model, View view) {

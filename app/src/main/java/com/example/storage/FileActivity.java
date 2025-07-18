@@ -4,6 +4,7 @@ import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -60,7 +62,6 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
 
     private void initializeEvent() {
         binding.btnBack.setOnClickListener(e -> finish());
-
         binding.btnOpenCamera.setOnClickListener(e -> openCamera());
     }
 
@@ -108,7 +109,29 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
         String path = model.getData();
         String[] paths = path.split("/");
         String oldFileName = paths[paths.length - 1];
-        viewModel.upDateFileNameImage(this, oldFileName, "kachu.jpg");
+        showInputNewFileName(oldFileName);
+
+    }
+
+    private void showInputNewFileName(String oldFileName){
+        final EditText editText = new EditText(this);
+        editText.setHint("nhập tên file ");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(" nhập tên");
+        builder.setView(editText);
+
+        builder.setPositiveButton("update", (dialog, which) -> {
+            String newFileName = editText.getText().toString().trim();
+            if(newFileName.isEmpty()){
+                Toast.makeText(this, "không được để trống", Toast.LENGTH_SHORT).show();
+            } else {
+                viewModel.upDateFileNameImage(this, oldFileName , newFileName + ".jpg");
+            }
+        });
+
+        builder.setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 
     private void deleteImage(FolderModel model) {

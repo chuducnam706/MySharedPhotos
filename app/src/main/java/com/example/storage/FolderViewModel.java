@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FolderViewModel extends ViewModel {
@@ -145,6 +146,7 @@ public class FolderViewModel extends ViewModel {
 
             if(deleteRows > 0){
                 Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                getDataFromExternal(context);
             }
         }
 
@@ -154,6 +156,7 @@ public class FolderViewModel extends ViewModel {
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String  selection = MediaStore.Images.Media.DISPLAY_NAME + " =? ";
         String[] selectionArgs = new String[]{oldFileName};
+
 
         Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.Media._ID},selection, selectionArgs, null);
 
@@ -170,6 +173,7 @@ public class FolderViewModel extends ViewModel {
             int rows = context.getContentResolver().update(imageUri, values, null, null);
             if(rows > 0){
                 Toast.makeText(context, "Change file name success", Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(context, "No Update File Name", Toast.LENGTH_SHORT).show();
             }
