@@ -29,5 +29,8 @@ public class ImageActivity extends AppCompatActivity {
         FolderModel data = gson.fromJson(dataText, FolderModel.class);
 
         Glide.with(this).load(data.getData()).into(binding.image);
+
+        binding.btnExit.setOnClickListener(e -> finish());
+
     }
 }

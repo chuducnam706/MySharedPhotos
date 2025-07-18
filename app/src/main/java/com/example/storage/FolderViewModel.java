@@ -59,7 +59,6 @@ public class FolderViewModel extends ViewModel {
         return groupBy();
     }
 
-
     private List<String> getParentPath() {
         List<String> paths = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
@@ -74,7 +73,6 @@ public class FolderViewModel extends ViewModel {
         return paths;
     }
 
-
     public List<FolderData> groupBy() {
         List<FolderData> items = new ArrayList<>();
         for (int i = 0; i < folderPath.size(); i++) {
@@ -86,7 +84,6 @@ public class FolderViewModel extends ViewModel {
                 }
             }
             items.add(item);
-
         }
         return items;
     }
@@ -135,7 +132,6 @@ public class FolderViewModel extends ViewModel {
         String selection = MediaStore.Images.Media.DISPLAY_NAME + " =? ";
         String[] selectionArgs = new String[]{fileName};
 
-
         Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.Media._ID},selection ,selectionArgs,null);
         if ((cursor != null && cursor.moveToFirst())){
             int indexColumId = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
@@ -156,7 +152,6 @@ public class FolderViewModel extends ViewModel {
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         String  selection = MediaStore.Images.Media.DISPLAY_NAME + " =? ";
         String[] selectionArgs = new String[]{oldFileName};
-
 
         Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.Media._ID},selection, selectionArgs, null);
 

@@ -41,7 +41,6 @@
 
             viewModel = new ViewModelProvider(this).get(FolderViewModel.class);
             initData();
-
         }
 
         private void initData() {
@@ -56,17 +55,12 @@
             Intent intent = new Intent(this, FileActivity.class);
             intent.putExtra("data", temp);
             startActivity(intent);
-
         }
 
         @Override
-        public void onClick(FolderModel model) {
-
-        }
+        public void onClick(FolderModel model) {}
 
         @Override
-        public void onClickOption(FolderModel model, View view) {
-
-        }
+        public void onClickOption(FolderModel model, View view) {}
 
     }

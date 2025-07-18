@@ -65,7 +65,6 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
         binding.btnOpenCamera.setOnClickListener(e -> openCamera());
     }
 
-
     private void initData(FolderData data) {
         List<FolderModel> models = data.getImages();
         for (FolderModel model : models) {
@@ -104,13 +103,11 @@ public class FileActivity extends AppCompatActivity implements onClickItem {
         startActivityForResult(intent, 100);
     }
 
-
     private void upDateFileName(FolderModel model) {
         String path = model.getData();
         String[] paths = path.split("/");
         String oldFileName = paths[paths.length - 1];
         showInputNewFileName(oldFileName);
-
     }
 
     private void showInputNewFileName(String oldFileName){
